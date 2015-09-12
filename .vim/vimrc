@@ -6,6 +6,14 @@
 "              on this file is still a good idea.
 
 "------------------------------------------------------------
+
+" (i.e. pathogen) Manage your 'runtimepath' with ease.  In practical terms, pathogen.vim makes it super easy to install plugins and runtime files in their own private directories.
+" load pathogen from the submodule .vim/bundle/vim-pathogen/ 
+runtime bundle/vim-pathogen/autoload/pathogen.vim
+" infect plugins
+execute pathogen#infect()
+
+"------------------------------------------------------------
 " Features {{{1
 "
 " These options and commands enable some very useful features in Vim, that
@@ -181,11 +189,6 @@ au FileType c,cpp,java,python,cuda setlocal foldmethod=indent
 
 "------------------------------------------------------------
 
-" (i.e. pathogen) Manage your 'runtimepath' with ease.  In practical terms, pathogen.vim makes it super easy to install plugins and runtime files in their own private directories.
-execute pathogen#infect()
-
-"------------------------------------------------------------
-
 " Solarized theme color
 syntax enable
 set background=dark
@@ -227,22 +230,23 @@ imap <A-DOWN> <ESC>gji
 " Pour que les fenêtres de diffsplit / diffpatch soient en vertical par défaut
 set diffopt=vertical
 
-
+"------------------------------------------------------------
 "Active la correction orthographique
 set spell
 " Définit les langues pour vérifier l'orthographe
 set spelllang=en,fr
 
+"------------------------------------------------------------
 " Pour accélérer le mise à jour, notamment de taglist
 set updatetime=1000
 
 " Ferme vim si la fenêtre de TagList est la seule encore ouverte
 let Tlist_Exit_OnlyWindow = 1
 
-
+"------------------------------------------------------------
 "" CONFIGURATION POUR AIRLINE ""
 
-" automatically populate the g:airline_symbols dictionnary with the poweerline symbols
+" automatically populate the g:airline_symbols dictionary with the powerline symbols
 let g:airline_powerline_fonts = 1
 
 "airline fonts
@@ -274,7 +278,7 @@ let g:airline_symbols.whitespace = 'Ξ'
 
 let g:airline#extensions#tmuxline#enabled = 0
 
-
+"------------------------------------------------------------
 " to pass ctrl+arrow keys to through to its terminals (in combination with
 " .tmux.conf)
 if &term =~ '^screen'
@@ -285,7 +289,13 @@ if &term =~ '^screen'
     execute "set <xLeft>=\e[1;*D"
 endif
 
+"------------------------------------------------------------
 " config pour plugin vim-indent-guide
 let g:indent_guides_color_change_percent=5
 let g:indent_guides_start_level=2
 let g:indent_guides_guide_size=1
+
+"------------------------------------------------------------
+" close vim if the only window left open is a NERDTree
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
+
