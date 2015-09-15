@@ -1,0 +1,1 @@
+/home/turlutton/.irssi/scripts/hilightwin/hilightwin.pl
