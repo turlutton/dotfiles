@@ -5,3 +5,12 @@
 	autocrlf = input
 	safecrlf = true
 	editor = /usr/bin/vim
+
+[diff]
+      tool = default-difftool
+
+[difftool "default-difftool"]
+      cmd = vim -f '+next' '+execute \"DirDiff\" argv(0) argv(1)' $LOCAL $REMOTE
+
+[difftool]
+      prompt = false
