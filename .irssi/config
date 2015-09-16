@@ -108,6 +108,7 @@ channels = (
   { name = "#irssi"; chatnet = "ircnet"; autojoin = "No"; },
   { name = "silc"; chatnet = "silc"; autojoin = "No"; },
   { name = "#vim"; chatnet = "Freenode"; autojoin = "yes"; }
+  { name = "#irssi"; chatnet = "Freenode"; autojoin = "yes"; },
 );
 
 aliases = {
@@ -159,6 +160,7 @@ aliases = {
   UNSET = "set -clear";
   RESET = "set -default";
   id = "^msg nickserv identify";
+  ThemeReload = "SCRIPT EXEC Irssi::themes_reload();";
 };
 
 statusbar = {
@@ -289,7 +291,10 @@ settings = {
     term_force_colors = "yes";
     scroll_page_count = "= .33";
   };
-  "fe-common/core" = { };
+  "fe-common/core" = {
+    hilight_act_color = "%R";
+    hilight_nick_matches = "no";
+  };
   "perl/core/scripts" = {
     awl_shared_sbar = "OFF";
     awl_viewer = "no";
@@ -301,6 +306,11 @@ settings = {
     nicklist_pane_width = "13";
   };
 };
+keyboard = (
+  { key = "^R"; id = "command"; data = "history_search "; },
+  { key = "^F"; id = "command"; data = "history_search -forward"; }
+);
+hilights = ( { text = "turlutton"; nick = "no"; word = "yes"; } );
 windows = {
   1 = { immortal = "yes"; name = "status"; level = "ALL"; };
   2 = { name = "hilight"; sticky = "yes"; };
@@ -314,13 +324,18 @@ windows = {
       }
     );
   };
+  4 = {
+    items = (
+      {
+        type = "CHANNEL";
+        chat_type = "IRC";
+        name = "#irssi";
+        tag = "freenode";
+      }
+    );
+  };
 };
 mainwindows = {
-  1 = { first_line = "7"; lines = "37"; };
-  2 = { first_line = "1"; lines = "6"; };
+  1 = { first_line = "6"; lines = "28"; };
+  2 = { first_line = "1"; lines = "5"; };
 };
-keyboard = (
-  { key = "^R"; id = "command"; data = "history_search "; },
-  { key = "^F"; id = "command"; data = "history_search -forward"; }
-);
-hilights = ( );
