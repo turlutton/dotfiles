@@ -49,3 +49,6 @@
 [submodule ".vim/bundle/promptline"]
 	path = .vim/bundle/promptline
 	url = https://github.com/edkolev/promptline.vim.git
+[submodule ".fonts"]
+	path = .fonts
+	url = https://github.com/powerline/fonts.git/
