@@ -107,7 +107,7 @@ if ! shopt -oq posix; then
 fi
 
 # To source autojump
-. /usr/share/autojump/autojump.sh
+#. /usr/share/autojump/autojump.sh
 
 # to enable reverse search ctrl+s in combination with ctrl+r (by default ctrl+s pause the screen and so bash never saw ctrl+s to reverse)
 stty -ixon
