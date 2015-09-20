@@ -107,8 +107,7 @@ chatnets = {
 channels = (
   { name = "#irssi"; chatnet = "ircnet"; autojoin = "No"; },
   { name = "silc"; chatnet = "silc"; autojoin = "No"; },
-  { name = "#vim"; chatnet = "Freenode"; autojoin = "yes"; },
-  { name = "#irssi"; chatnet = "Freenode"; autojoin = "yes"; }
+  { name = "#vim"; chatnet = "Freenode"; autojoin = "yes"; }
 );
 
 aliases = {
@@ -324,18 +323,8 @@ windows = {
       }
     );
   };
-  4 = {
-    items = (
-      {
-        type = "CHANNEL";
-        chat_type = "IRC";
-        name = "#irssi";
-        tag = "freenode";
-      }
-    );
-  };
 };
 mainwindows = {
-  1 = { first_line = "6"; lines = "28"; };
+  3 = { first_line = "6"; lines = "28"; };
   2 = { first_line = "1"; lines = "5"; };
 };

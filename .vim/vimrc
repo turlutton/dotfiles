@@ -171,6 +171,8 @@ map Y y$
 " next search
 nnoremap <C-L> :nohl<CR><C-L>
 
+" Include the space after the word with cw
+nnoremap cw dwi
 
 "------------------------------------------------------------
 "Pour utiliser la méthode de repliage basée sur l’indentation du fichier
