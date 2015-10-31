@@ -1,16 +1,12 @@
-# include what you want
-
-export PATH=$PATH:$HOME/bin
-
-# add this to the .bashrc or .zshrc (done automatically by dfm):
-# . $HOME/.shellrc.load
-
-####
-# put any bash/zsh customizations in here
-
 # ~/.bashrc: executed by bash(1) for non-login shells.
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
+
+# path to local bin easily handled by the dotfile manager (dfm)
+export PATH=$PATH:$HOME/bin
+
+# set the editor variable environnement
+export EDITOR=/usr/bin/vim
 
 # If not running interactively, don't do anything
 case $- in
@@ -18,45 +14,39 @@ case $- in
       *) return;;
 esac
 
-# don't put duplicate lines or lines starting with space in the history.
-# See bash(1) for more options
-#HISTCONTROL=ignoreboth
+## Bash history ##
 # supprime les doublons de l'historique qu'ils se suivent ou non
 HISTCONTROL=erasedups
-
-# append to the history file, don't overwrite it
-shopt -s histappend
-
 # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
 HISTSIZE=1000
 HISTFILESIZE=2000
 
+## Shell options ##
+# append to the history file, don't overwrite it
+shopt -s histappend
 # check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.
 shopt -s checkwinsize
-
 # If set, the pattern "**" used in a pathname expansion context will
 # match all files and zero or more directories and subdirectories.
-#shopt -s globstar
+shopt -s globstar
+#permet de cd dans un répertoire mal écris
+shopt -s cdspell
+#permet de cd dans un répertoire directement en tapant son nom (sans cd)
+shopt -s autocd
 
 # make less more friendly for non-text input files, see lesspipe(1)
-#[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
+[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
-# set variable identifying the chroot you work in (used in the prompt below)
-if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then
-    debian_chroot=$(cat /etc/debian_chroot)
-fi
-
+## Prompt ## 
 # set a fancy prompt (non-color, unless we know we "want" color)
 case "$TERM" in
     xterm-color) color_prompt=yes;;
 esac
-
 # uncomment for a colored prompt, if the terminal has the capability; turned
 # off by default to not distract the user: the focus in a terminal window
 # should be on the output of commands, not on the prompt
 force_color_prompt=yes
-
 if [ -n "$force_color_prompt" ]; then
     if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
 	# We have color support; assume it's compliant with Ecma-48
@@ -67,7 +57,11 @@ if [ -n "$force_color_prompt" ]; then
 	color_prompt=
     fi
 fi
-
+# set variable identifying the chroot you work in (used in the prompt below)
+if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then
+    debian_chroot=$(cat /etc/debian_chroot)
+fi
+# personnalisation du prompt
 if [ "$color_prompt" = yes ]; then
     PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
     #pour avoir un fond sur PS1
@@ -76,7 +70,6 @@ else
     PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
 fi
 unset color_prompt force_color_prompt
-
 # If this is an xterm set the title to user@host:dir
 case "$TERM" in
 xterm*|rxvt*)
@@ -86,11 +79,14 @@ xterm*|rxvt*)
     ;;
 esac
 
+# Enable the use of degraded 256 colorscheme (for vim to use the solarized theme)
+## workaround for handling TERM variable in multiple tmux sessions properly from http://sourceforge.net/p/tmux/mailman/message/32751663/ by Nicholas Marriott
+if [[ $TERM == xterm ]]; then TERM=xterm-256color; fi
+
 # Alias definitions.
 # You may want to put all your additions into a separate file like
 # ~/.bash_aliases, instead of adding them here directly.
 # See /usr/share/doc/bash-doc/examples in the bash-doc package.
-
 if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
 fi
@@ -106,8 +102,14 @@ if ! shopt -oq posix; then
   fi
 fi
 
-# To source autojump
-#. /usr/share/autojump/autojump.sh
+#To get fasd working in a shell, some initialization code must be run. 
+#This will setup a command hook that executes on every command and advanced tab completion for zsh and bash.
+fasd_cache="$HOME/.fasd-init-bash"
+if [ "$(command -v fasd)" -nt "$fasd_cache" -o ! -s "$fasd_cache" ]; then
+  fasd --init posix-alias bash-hook >| "$fasd_cache"
+fi
+source "$fasd_cache"
+unset fasd_cache
 
 # to enable reverse search ctrl+s in combination with ctrl+r (by default ctrl+s pause the screen and so bash never saw ctrl+s to reverse)
 stty -ixon
@@ -116,21 +118,16 @@ stty -ixon
 bind '"\e[A":history-search-backward'
 bind '"\e[B":history-search-forward'
 
-# set the editor variable environnement
-export EDITOR=$EDITOR/usr/bin/vim
-
-# Enable the use of degraded 256 colorscheme (for vim to use the solarized theme)
-## workaround for handling TERM variable in multiple tmux sessions properly from http://sourceforge.net/p/tmux/mailman/message/32751663/ by Nicholas Marriott
-if [[ $TERM == xterm ]]; then TERM=xterm-256color; fi
-# export TERM="xterm-255color"
-
 # Variable d'environnement pointant vers le script de démarrage pour python
 export PYTHONSTARTUP=~/.pythonstartup
 
-# Shell options
-shopt -s cdspell  #permet de cd dans un répertoire mal écris
-shopt -s autocd #permet de cd dans un répertoire directement en tapant son nom (sans cd)
-
 # promptline like airline
-source ~/.shell_prompt.sh
+[ -f ~/.shell_prompt.sh ] && source ~/.shell_prompt.sh
+
+# using fzf
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash && export PATH=${PATH}:~/.fzf_browser
+
+# using ggvGc fzf_browser
+[ -f ~/.fzf_browser/fzf_browser.sh ] && source ~/.fzf_browser/fzf_browser.sh
+#bind '"^b":fuzzybrowse'
 

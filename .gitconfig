@@ -10,7 +10,7 @@
       tool = default-difftool
 
 [difftool "default-difftool"]
-      cmd = vim -f '+next' '+execute \"DirDiff\" argv(0) argv(1)' $LOCAL $REMOTE
+      cmd = vimdiff -f $LOCAL $REMOTE # vim -f '+next' '+execute \"DirDiff\" argv(0) argv(1)' $LOCAL $REMOTE
 
 [difftool]
       prompt = false

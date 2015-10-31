@@ -8,10 +8,11 @@ servers = (
     port = "6667";
   },
   { address = "irc.dal.net"; chatnet = "DALnet"; port = "6667"; },
-  { 
+  {
     address = "irc.quakenet.org";
     chatnet = "QuakeNet";
     port = "6667";
+    autoconnect = "yes";
   },
   { address = "irc.oftc.net"; chatnet = "OFTC"; port = "6667"; },
   {
@@ -108,7 +109,8 @@ channels = (
   { name = "#irssi"; chatnet = "ircnet"; autojoin = "No"; },
   { name = "silc"; chatnet = "silc"; autojoin = "No"; },
   { name = "#vim"; chatnet = "Freenode"; autojoin = "yes"; },
-  { name = "#regex"; chatnet = "Freenode"; autojoin = "yes"; }
+  { name = "#regex"; chatnet = "Freenode"; autojoin = "yes"; },
+  { name = "##lesneuneus"; chatnet = "QuakeNet"; autojoin = "yes"; }
 );
 
 aliases = {
@@ -159,7 +161,8 @@ aliases = {
   ATAG = "WINDOW SERVER";
   UNSET = "set -clear";
   RESET = "set -default";
-  id = "^msg nickserv identify";
+  id = "^msg -freenode nickserv identify";
+  auth = "^msg -QuakeNet Q@CServe.quakenet.org AUTH turlutton $0; wait -QuakeNet 1000; mode turlutton +x";
   ThemeReload = "SCRIPT EXEC Irssi::themes_reload();";
 };
 
@@ -302,6 +305,7 @@ settings = {
     fancy_abbrev = "head";
     awl_placement = "bottom";
     smartfilter_delay = "1800";
+    smartfilter_min_users = "20";
     nicklist_max_users = "10000";
     nicklist_pane_width = "13";
   };
@@ -331,6 +335,16 @@ windows = {
         chat_type = "IRC";
         name = "#regex";
         tag = "freenode";
+      }
+    );
+  };
+  5 = {
+    items = (
+      {
+        type = "CHANNEL";
+        chat_type = "IRC";
+        name = "##lesneuneus";
+        tag = "QuakeNet";
       }
     );
   };
