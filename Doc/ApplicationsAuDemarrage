@@ -1,0 +1,8 @@
+Nom: ScreenColorHandler
+Commande: xflux -l 43.6 -g 3.88333
+Commentaire: Launch xflux on startup to change screen color depending on geographic situation and time.
+
+Nom: IrssiNotifierListener 
+Commande: /home/turlutton/bin/notify-listener.py
+Commentaire: Listen irssi notifier to display on desktop
+
