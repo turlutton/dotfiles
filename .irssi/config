@@ -8,11 +8,10 @@ servers = (
     port = "6667";
   },
   { address = "irc.dal.net"; chatnet = "DALnet"; port = "6667"; },
-  {
+  { 
     address = "irc.quakenet.org";
     chatnet = "QuakeNet";
     port = "6667";
-    autoconnect = "yes";
   },
   { address = "irc.oftc.net"; chatnet = "OFTC"; port = "6667"; },
   {
@@ -108,9 +107,9 @@ chatnets = {
 channels = (
   { name = "#irssi"; chatnet = "ircnet"; autojoin = "No"; },
   { name = "silc"; chatnet = "silc"; autojoin = "No"; },
-  { name = "#vim"; chatnet = "Freenode"; autojoin = "yes"; },
-  { name = "#regex"; chatnet = "Freenode"; autojoin = "yes"; },
-  { name = "##lesneuneus"; chatnet = "QuakeNet"; autojoin = "yes"; }
+  { name = "#vim"; chatnet = "Freenode"; autojoin = "No"; },
+  { name = "#regex"; chatnet = "Freenode"; autojoin = "No"; },
+  # { name = "##lesneuneus"; chatnet = "QuakeNet"; autojoin = "No"; }
 );
 
 aliases = {
@@ -161,9 +160,12 @@ aliases = {
   ATAG = "WINDOW SERVER";
   UNSET = "set -clear";
   RESET = "set -default";
-  id = "^msg -freenode nickserv identify";
-  auth = "^msg -QuakeNet Q@CServe.quakenet.org AUTH turlutton $0; wait -QuakeNet 1000; mode turlutton +x";
+  id = "^msg -freenode nickserv identify $0; wait -freenode 3000; join -freenode #regex";
+  auth = "^msg -QuakeNet Q@CServe.quakenet.org AUTH turlutton $0; wait -QuakeNet 3000; mode turlutton +x; join -QuakeNet ##lesneuneus";
   ThemeReload = "SCRIPT EXEC Irssi::themes_reload();";
+  rgx = "msg -freenode #regex $0: You can save your regex attempt and (real world) example stringS on regex101.com (top left) and paste the link here. [automated message]";
+  rgx2 = "msg -freenode #regex $0: 1) What do you -really- want do to ?  2) Can you fill in your full real world example stringS in the test string field of regex101.com? [automated message]";
+  rgx3 = "msg -freenode #regex $0: Consider giving us full -real world- examples. Maybe that there are better solutions/approaches or edge cases you haven't thought of yet. [automated message]";
 };
 
 statusbar = {
@@ -288,11 +290,12 @@ settings = {
     real_name = "Turlutton";
     user_name = "turlutton";
     nick = "turlutton";
+    hostname = "hidden.i2p";
   };
   "fe-text" = {
     actlist_sort = "refnum";
     term_force_colors = "yes";
-    scroll_page_count = "= .33";
+    scroll_page_count = "1";
   };
   "fe-common/core" = {
     hilight_act_color = "%R";
@@ -318,17 +321,17 @@ hilights = ( { text = "turlutton"; nick = "no"; word = "yes"; } );
 windows = {
   1 = { immortal = "yes"; name = "status"; level = "ALL"; };
   2 = { name = "hilight"; sticky = "yes"; };
+  #3 = {
+  #  items = (
+  #    {
+  #      type = "CHANNEL";
+  #      chat_type = "IRC";
+  #      name = "#vim";
+  #      tag = "freenode";
+  #    }
+  #  );
+  #};
   3 = {
-    items = (
-      {
-        type = "CHANNEL";
-        chat_type = "IRC";
-        name = "#vim";
-        tag = "freenode";
-      }
-    );
-  };
-  4 = {
     items = (
       {
         type = "CHANNEL";
@@ -338,18 +341,20 @@ windows = {
       }
     );
   };
-  5 = {
-    items = (
-      {
-        type = "CHANNEL";
-        chat_type = "IRC";
-        name = "##lesneuneus";
-        tag = "QuakeNet";
-      }
-    );
-  };
+  #  5 = {
+  #    items = (
+  #      {
+  #        type = "CHANNEL";
+  #        chat_type = "IRC";
+  #        name = "##lesneuneus";
+  #        tag = "QuakeNet";
+  #      }
+  #    );
+  #  };
 };
 mainwindows = {
   3 = { first_line = "6"; lines = "28"; };
   2 = { first_line = "1"; lines = "5"; };
 };
+ignores = ( { level = "CTCPS"; } );
+notifies = { help = { }; turlutton = { }; };

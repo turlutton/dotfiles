@@ -11,13 +11,13 @@ It contains an utility ([dfm](https://github.com/justone/dfm)) to help with mana
 ##Use
 
 Don't use it. [Dotfiles are not meant to be forked](http://www.anishathalye.com/2014/08/03/managing-your-dotfiles/).
-You can take inspiration from my configuration, however i don't recommend it.
+You can take inspiration from my configuration, however I don't recommend it.
 I haven't enough tested it, consider it unreliable.
 
 ## More details
 
-For vim, i'm using [pathogen](https://github.com/tpope/vim-pathogen) as a submodule. When it exists i have put the vim plugin as a submodule too.
-In my setup.sh, i have put a line to init and update my submodule on install with dfm.
+For vim, I'm using [pathogen](https://github.com/tpope/vim-pathogen) as a submodule. When it exists I have put the vim plugin as a submodule too.
+In my setup.sh, I have put a line to init and update my submodule on install with dfm.
 
 ## Full documentation
 

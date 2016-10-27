@@ -125,9 +125,11 @@ export PYTHONSTARTUP=~/.pythonstartup
 [ -f ~/.shell_prompt.sh ] && source ~/.shell_prompt.sh
 
 # using fzf
-[ -f ~/.fzf.bash ] && source ~/.fzf.bash && export PATH=${PATH}:~/.fzf_browser
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash && export FZF_TMUX=0
 
 # using ggvGc fzf_browser
-[ -f ~/.fzf_browser/fzf_browser.sh ] && source ~/.fzf_browser/fzf_browser.sh
+[ -f ~/.fzf_browser/fzf_browser.sh ] && source ~/.fzf_browser/fzf_browser.sh && export PATH=${PATH}:~/.fzf_browser
+
+
 #bind '"^b":fuzzybrowse'
 
