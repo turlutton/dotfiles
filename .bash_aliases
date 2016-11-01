@@ -42,3 +42,10 @@ alias o='a -e xdg-open' # quick opening files with xdg-open
 
 # alias for most used dir
 ##alias goCv='cd /home/turlutton/Documents/Justificatifs/Administratif/Cv'
+
+# Weather in terminal as a function (not an alias)
+weather () {
+    wget -qO - http://www.wttr.in/$1 | less -R 
+    # wget -qO - : quiet the wget infos, redirect to stdout
+    # less -R: ANSI  "color" escape sequences are output in "raw" form
+}
