@@ -188,6 +188,8 @@ nnoremap cw dwi
 " au FileType text setlocal foldmethod=manual
 set foldmethod=manual
 au FileType c,cpp,java,python,cuda setlocal foldmethod=indent
+"au BufRead *.golden execute "setlocal filetype=" . substitute(expand("%:t"), ".*\\\.\\(.*\\)\\\..*", "\\1" , "")
+
 
 "------------------------------------------------------------
 
@@ -274,12 +276,6 @@ let g:airline_symbols.whitespace = 'Ξ'
 " Automatically displays all buffers when there's only one tab open.
  let g:airline#extensions#tabline#enabled = 1
 
-" straight tabs
- " let g:airline#extensions#tabline#left_sep = ' '
- " let g:airline#extensions#tabline#left_alt_sep = '|'
-
-let g:airline#extensions#tmuxline#enabled = 0
-
 "------------------------------------------------------------
 " to pass ctrl+arrow keys to through to its terminals (in combination with
 " .tmux.conf)
@@ -301,3 +297,43 @@ let g:indent_guides_guide_size=1
 " close vim if the only window left open is a NERDTree
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 
+"------------------------------------------------------------
+" label tmux tabs with the name of the file edited in vim
+autocmd BufReadPost,FileReadPost,BufNewFile,BufEnter * call system("tmux rename-window 'vim | " . expand("%:t") . "'")
+
+"------------------------------------------------------------
+" Enable fzf - A fuzzy finder written in Go (plugin) - https://github.com/junegunn/fzfjunegun/fzf
+set rtp+=~/.fzf
+
+"------------------------------------------------------------
+" ggvGc fuzzybrowser
+" to find the plugin
+set rtp+=~/.fzf_browser/vim
+" mapping to add filepath completion in insert mode using the browser
+imap <c-f> <plug>FuzzyPath
+
+"------------------------------------------------------------
+"noremap <Leader>ta :call MaFonction()<cr>
+"function MaFonction()
+"    normal "ayy
+"    execute "!echo ". getreg("a")
+"endfunction
+"
+"nmap ", y$:!ls <c-r>"<cr>
+"nmap ", :call Test()<cr>
+"function Test()
+"    if getline(".")[0] == '#'
+"       normal j
+"    endif
+"    normal yy
+"    execute "!echo" getreg('"')
+"endfunction
+
+"function Truc()
+"    let line = getline(".")
+"    if line =~ ".*{ \+$"
+"        execute "normal $F{%x``xjxxk^dW"
+"    elseif line =~ ".*{$"
+"        execute "normal $%x``xjxxk^dW"
+"    endif
+"endfunction

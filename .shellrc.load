@@ -2,12 +2,16 @@
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
 
+## Setting up the environment (should be in .bash_profile if it was not to use with `dfm`)
+#
 # path to local bin easily handled by the dotfile manager (dfm)
 export PATH=$PATH:$HOME/bin
-
 # set the editor variable environnement
 export EDITOR=/usr/bin/vim
 
+
+## Basic bash set up
+#
 # If not running interactively, don't do anything
 case $- in
     *i*) ;;
@@ -33,7 +37,7 @@ shopt -s globstar
 #permet de cd dans un répertoire mal écris
 shopt -s cdspell
 #permet de cd dans un répertoire directement en tapant son nom (sans cd)
-shopt -s autocd
+#shopt -s autocd
 
 # make less more friendly for non-text input files, see lesspipe(1)
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
@@ -79,19 +83,7 @@ xterm*|rxvt*)
     ;;
 esac
 
-# Enable the use of degraded 256 colorscheme (for vim to use the solarized theme)
-## workaround for handling TERM variable in multiple tmux sessions properly from http://sourceforge.net/p/tmux/mailman/message/32751663/ by Nicholas Marriott
-if [[ $TERM == xterm ]]; then TERM=xterm-256color; fi
-
-# Alias definitions.
-# You may want to put all your additions into a separate file like
-# ~/.bash_aliases, instead of adding them here directly.
-# See /usr/share/doc/bash-doc/examples in the bash-doc package.
-if [ -f ~/.bash_aliases ]; then
-    . ~/.bash_aliases
-fi
-
-# enable programmable completion features (you don't need to enable
+# Enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
 # sources /etc/bash.bashrc).
 if ! shopt -oq posix; then
@@ -102,6 +94,39 @@ if ! shopt -oq posix; then
   fi
 fi
 
+# Bindings for "previous search wich begins with" with arrow up/down
+bind '"\e[A":history-search-backward'
+bind '"\e[B":history-search-forward'
+
+# to enable reverse search ctrl+s in combination with ctrl+r (by default ctrl+s pause the screen and so bash never saw ctrl+s to reverse)
+# /!\ C-r uses ggvGC fzf_browser
+stty -ixon
+
+
+## Alias definitions.
+#
+# You may want to put all your additions into a separate file like
+# ~/.bash_aliases, instead of adding them here directly.
+# See /usr/share/doc/bash-doc/examples in the bash-doc package.
+if [ -f ~/.bash_aliases ]; then
+    . ~/.bash_aliases
+fi
+
+#################
+## FANCY STUFF ##
+#################
+
+## Solarized fancy stuff ##
+#
+# Enable the use of degraded 256 colorscheme (for vim to use the solarized theme)
+# workaround for handling TERM variable in multiple tmux sessions properly from http://sourceforge.net/p/tmux/mailman/message/32751663/ by Nicholas Marriott
+if [[ $TERM == xterm ]]; then TERM=xterm-256color; fi
+# promptline like airline
+[ -f ~/.shell_prompt.sh ] && source ~/.shell_prompt.sh
+
+## Efficiently browsing ##
+#
+## Fasd - Command-line productivity booster, offers quick access to files and directories, inspired by autojump, z and v - https://github.com/clvv/fasd
 #To get fasd working in a shell, some initialization code must be run. 
 #This will setup a command hook that executes on every command and advanced tab completion for zsh and bash.
 fasd_cache="$HOME/.fasd-init-bash"
@@ -111,25 +136,21 @@ fi
 source "$fasd_cache"
 unset fasd_cache
 
-# to enable reverse search ctrl+s in combination with ctrl+r (by default ctrl+s pause the screen and so bash never saw ctrl+s to reverse)
-stty -ixon
-
-# Bindings for "previous search wich begins with" with arrow up/down
-bind '"\e[A":history-search-backward'
-bind '"\e[B":history-search-forward'
-
-# Variable d'environnement pointant vers le script de démarrage pour python
-export PYTHONSTARTUP=~/.pythonstartup
-
-# promptline like airline
-[ -f ~/.shell_prompt.sh ] && source ~/.shell_prompt.sh
-
+## fzf - A command-line fuzzy finder written in Go - https://github.com/junegunn/fzf
 # using fzf
-[ -f ~/.fzf.bash ] && source ~/.fzf.bash && export FZF_TMUX=0
-
+if [ -f ~/.fzf.bash ]; then
+    source ~/.fzf.bash && export FZF_TMUX=0
+    export FZF_DEFAULT_COMMAND="find -L . -mindepth 1 \\( -fstype 'devfs' -o -fstype 'devtmpfs' -o -fstype 'proc' \\) -prune \
+               -o -type f -print \
+               -o -type d -print \
+               -o -type l -print 2> /dev/null | cut -b3-"
+    export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+    export FZF_ALT_C_COMMAND="find -L . \\( -fstype 'devfs' -o -fstype 'devtmpfs' -o -fstype 'proc' \\) -prune \
+                              -o -type d -print 2> /dev/null | sed 1d | cut -b3-";
+fi
 # using ggvGc fzf_browser
 [ -f ~/.fzf_browser/fzf_browser.sh ] && source ~/.fzf_browser/fzf_browser.sh && export PATH=${PATH}:~/.fzf_browser
 
-
-#bind '"^b":fuzzybrowse'
-
+# /!\ Check to what end it is used (I don't remember it), might be removable
+# # Variable d'environnement pointant vers le script de démarrage pour python
+# # export PYTHONSTARTUP=~/.pythonstartup

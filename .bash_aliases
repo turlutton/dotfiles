@@ -12,7 +12,6 @@ fi
 
 # some more ls aliases
 alias ll='ls -alFh'
-alias la='ls -A'
 alias l='ls -CF'
 
 # Rm alias: confirmation de suppression avec -i, l'option -f supprime sans confirmation
@@ -25,13 +24,9 @@ alias ks='ls'
 
 alias ..="cd .."
 alias ..2="cd ../.."
-alias ...="cd ../.."
 alias ..3="cd ../../.."
-alias ....="cd ../../.."
 alias ..4="cd ../../../.."
-alias .....="cd ../../../.."
 alias ..5="cd ../../../../.."
-alias ......="cd ../../../../.."
  
 # Force tmux to assume the terminal supports 256 colours.
 alias tmux='tmux -2'

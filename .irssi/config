@@ -107,9 +107,9 @@ chatnets = {
 channels = (
   { name = "#irssi"; chatnet = "ircnet"; autojoin = "No"; },
   { name = "silc"; chatnet = "silc"; autojoin = "No"; },
-  { name = "#vim"; chatnet = "Freenode"; autojoin = "No"; },
   { name = "#regex"; chatnet = "Freenode"; autojoin = "No"; },
-  # { name = "##lesneuneus"; chatnet = "QuakeNet"; autojoin = "No"; }
+  { name = "#bash"; chatnet = "Freenode"; autojoin = "No"; },
+  { name = "#debian"; chatnet = "Freenode"; autojoin = "No"; }
 );
 
 aliases = {
@@ -160,12 +160,11 @@ aliases = {
   ATAG = "WINDOW SERVER";
   UNSET = "set -clear";
   RESET = "set -default";
-  id = "^msg -freenode nickserv identify $0; wait -freenode 3000; join -freenode #regex";
-  auth = "^msg -QuakeNet Q@CServe.quakenet.org AUTH turlutton $0; wait -QuakeNet 3000; mode turlutton +x; join -QuakeNet ##lesneuneus";
+  id = "^msg -freenode nickserv identify $0; wait -freenode 3000; join -freenode #regex; join -freenode #bash; join -freenode #debian";
   ThemeReload = "SCRIPT EXEC Irssi::themes_reload();";
   rgx = "msg -freenode #regex $0: You can save your regex attempt and (real world) example stringS on regex101.com (top left) and paste the link here. [automated message]";
-  rgx2 = "msg -freenode #regex $0: 1) What do you -really- want do to ?  2) Can you fill in your full real world example stringS in the test string field of regex101.com? [automated message]";
-  rgx3 = "msg -freenode #regex $0: Consider giving us full -real world- examples. Maybe that there are better solutions/approaches or edge cases you haven't thought of yet. [automated message]";
+  rgx2 = "msg -freenode #regex $0: 1) What do you -really- want do to ? (avoid the XYProblem, see https://meta.stackexchange.com/questions/66377/what-is-the-xy-problem)  2) Can you fill in your full real world example stringS in the test string field of regex101.com? [automated message]";
+  rgx3 = "msg -freenode #regex $0: Consider giving us full -real world- examples. Maybe that there are better solutions/approaches or edge cases you haven't thought of yet. (see https://meta.stackexchange.com/questions/66377/what-is-the-xy-problem) [automated message]";
 };
 
 statusbar = {
@@ -309,8 +308,6 @@ settings = {
     awl_placement = "bottom";
     smartfilter_delay = "1800";
     smartfilter_min_users = "20";
-    nicklist_max_users = "10000";
-    nicklist_pane_width = "13";
   };
 };
 keyboard = (
@@ -321,16 +318,6 @@ hilights = ( { text = "turlutton"; nick = "no"; word = "yes"; } );
 windows = {
   1 = { immortal = "yes"; name = "status"; level = "ALL"; };
   2 = { name = "hilight"; sticky = "yes"; };
-  #3 = {
-  #  items = (
-  #    {
-  #      type = "CHANNEL";
-  #      chat_type = "IRC";
-  #      name = "#vim";
-  #      tag = "freenode";
-  #    }
-  #  );
-  #};
   3 = {
     items = (
       {
@@ -341,16 +328,26 @@ windows = {
       }
     );
   };
-  #  5 = {
-  #    items = (
-  #      {
-  #        type = "CHANNEL";
-  #        chat_type = "IRC";
-  #        name = "##lesneuneus";
-  #        tag = "QuakeNet";
-  #      }
-  #    );
-  #  };
+  4 = {
+    items = (
+      {
+        type = "CHANNEL";
+        chat_type = "IRC";
+        name = "#bash";
+        tag = "freenode";
+      }
+    );
+  };
+  5 = {
+    items = (
+      {
+        type = "CHANNEL";
+        chat_type = "IRC";
+        name = "#debian";
+        tag = "freenode";
+      }
+    );
+  };
 };
 mainwindows = {
   3 = { first_line = "6"; lines = "28"; };
