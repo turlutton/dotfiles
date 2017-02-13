@@ -7,8 +7,9 @@ echo 'Importing submodules (tmux plugins + vim plugins)..'
 git submodule update --init --recursive
 
 echo 'Building font information cached files..'
-# build font information cached files
+# build font information cached files (following https://powerline.readthedocs.io/en/latest/installation/linux.html#font-installation )
 fc-cache -vf "$HOME/.fonts/"
+# after this the fonts are updated on the system but you still have to set it in whatever you use it in (for gnome-terminal I use "Fira Mono Medium for Powerline Medium 10" /home/turlutton/.gconf/apps/gnome-terminal/profiles/Default)
 
 # installing fasd - Command-line productivity booster, offers quick access to files and directories, inspired by autojump, z and v. - https://github.com/clvv/fasd
 if [ -d "$HOME/.fasd" ]; then
