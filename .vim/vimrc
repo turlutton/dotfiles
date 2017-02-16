@@ -1,9 +1,10 @@
-" UR http://vim.wikia.com/wiki/ExampleL:_vimrc
-" Authors: http://vim.wikia.com/wiki/Vim_on_Freenode
-" Description: A minimal, but feature rich, example .vimrc. If you are a
-"              newbie, basing your first .vimrc on this file is a good choice.
-"              If you're a more advanced user, building your own .vimrc based
-"              on this file is still a good idea.
+" Original version from:
+""" UR http://vim.wikia.com/wiki/ExampleL:_vimrc
+""" Authors: http://vim.wikia.com/wiki/Vim_on_Freenode
+""" Description: A minimal, but feature rich, example .vimrc. If you are a
+"""              newbie, basing your first .vimrc on this file is a good choice.
+"""              If you're a more advanced user, building your own .vimrc based
+"""              on this file is still a good idea.
 
 "------------------------------------------------------------
 
@@ -100,8 +101,9 @@ set autoindent
 " coming from other editors would expect.
 set nostartofline
 
-" Syntax of the status line
-" set statusline=%f%m%r%h%w\ %<[FORMAT=%{&ff}]\ [TYPE=%Y]\ [ASCII=\%03.3b]\ [HEX=\%02.2B]\ \ \ \ \ %=%l\/%LL\,%vC\ \ \ \ %p%%\ 
+" Now set with airline
+""" Syntax of the status line
+""" set statusline=%f%m%r%h%w\ %<[FORMAT=%{&ff}]\ [TYPE=%Y]\ [ASCII=\%03.3b]\ [HEX=\%02.2B]\ \ \ \ \ %=%l\/%LL\,%vC\ \ \ \ %p%%\ 
 
 " Display the cursor position on the last line of the screen or in the status
 " line of a window
@@ -186,6 +188,9 @@ nnoremap cw dwi
 
 " set foldmethod=indent
 " au FileType text setlocal foldmethod=manual
+"
+" Indente automatiquement seulement pour les types de fichiers spécifiés (pas
+" seulement l'extension)
 set foldmethod=manual
 au FileType c,cpp,java,python,cuda setlocal foldmethod=indent
 "au BufRead *.golden execute "setlocal filetype=" . substitute(expand("%:t"), ".*\\\.\\(.*\\)\\\..*", "\\1" , "")
@@ -224,6 +229,7 @@ if has("multi_byte")
   set fileencodings=ucs-bom,utf-8,latin1
 endif
 
+" Pas vraiment utilisé, mais pourra être adapté à de futurs utilisations
 " I have discovered that if I hold down the Alt key while I use the up / down arrows to navigate the lines in the file, then Vim should follow the lines as shown visually in Vim, and not as the actual lines in the file. The key mappings to make this work are as follows and should simply be added to your vimrc file:
 "map <A-DOWN> gj
 "map <A-UP> gk
@@ -277,7 +283,7 @@ let g:airline_symbols.whitespace = 'Ξ'
  let g:airline#extensions#tabline#enabled = 1
 
 "------------------------------------------------------------
-" to pass ctrl+arrow keys to through to its terminals (in combination with
+" to pass ctrl+arrow keys through to its terminals (in combination with
 " .tmux.conf)
 if &term =~ '^screen'
     " tmux will send xterm-style keys when its xterm-keys option is on
@@ -313,6 +319,7 @@ set rtp+=~/.fzf_browser/vim
 imap <c-f> <plug>FuzzyPath
 
 "------------------------------------------------------------
+" Old remaining script I can take example on in I need it (dirty way, I know)
 "noremap <Leader>ta :call MaFonction()<cr>
 "function MaFonction()
 "    normal "ayy
