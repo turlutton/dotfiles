@@ -22,6 +22,16 @@ if [ -d "$HOME/.fzf" ]; then
     "$HOME/.fzf/install" --key-bindings --completion --no-update-rc ;
 fi
 
+# generate documentation for vim with vim-pathogen plugin
+if command -v vim >/dev/null; then
+    echo 'vim exists, now generating vim documentation threw  :Helptags  pathogen command'
+    # source vimrc, run Helptags and quit
+    vim -S "$HOME/.vim/vimrc" -c "Helptags" -c q
+else
+    echo "vim does not exist, I can't generate vim documentation threw pathogen plugin"
+fi
+
+
 #if [ -d "$HOME/.fzf_browser" ]; then
 #    # installing fzf - A command-line fuzzy finder written in Go - https://github.com/junegunn/fzf
 #    echo 'Now cloning and installing fzf at $HOME/.fzf (Enable key bindings and fuzzy completion, don'"'"'t update shell configuration files)..'
