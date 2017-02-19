@@ -163,8 +163,8 @@ aliases = {
   id = "^msg -freenode nickserv identify $0; wait -freenode 3000; join -freenode #regex; join -freenode #bash; join -freenode #debian";
   ThemeReload = "SCRIPT EXEC Irssi::themes_reload();";
   rgx = "msg -freenode #regex $0: You can save your regex attempt and (real world) example stringS on regex101.com (top left) and paste the link here. [automated message]";
-  rgx2 = "msg -freenode #regex $0: 1) What do you -really- want do to ? (avoid the XYProblem, see https://meta.stackexchange.com/questions/66377/what-is-the-xy-problem)  2) Can you fill in your full real world example stringS in the test string field of regex101.com? [automated message]";
-  rgx3 = "msg -freenode #regex $0: Consider giving us full -real world- examples. Maybe that there are better solutions/approaches or edge cases you haven't thought of yet. (see https://meta.stackexchange.com/questions/66377/what-is-the-xy-problem) [automated message]";
+  rgx2 = "msg -freenode #regex $0: 1) What do you -really- want do to ? (avoid the XYProblem, see http://xyproblem.info )  2) Can you fill in your full real world example stringS in the test string field of regex101.com? [automated message]";
+  rgx3 = "msg -freenode #regex $0: Consider giving us full -real world- examples (using regex101.com ). Maybe that there are better solutions/approaches or edge cases you haven't thought of yet. (see http://xyproblem.info ) [automated message]";
 };
 
 statusbar = {

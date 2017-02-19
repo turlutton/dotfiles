@@ -1,1 +1,0 @@
-../nicklist-master/nicklist.pl

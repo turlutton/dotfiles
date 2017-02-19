@@ -13,6 +13,8 @@
 runtime bundle/vim-pathogen/autoload/pathogen.vim
 " infect plugins
 execute pathogen#infect()
+" Only for C/C++ use alternate (switch between source file and header file)
+" autocmd FileType c,cpp execute pathogen#interpose('bundle/alternate/{}')
 
 "------------------------------------------------------------
 " Features {{{1
