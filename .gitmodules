@@ -61,6 +61,3 @@
 [submodule ".fzf_browser"]
 	path = .fzf_browser
 	url = https://github.com/ggVGc/fzf_browser
-[submodule ".fonts/PowerlineFonts"]
-	path = .fonts/PowerlineFonts
-	url = https://github.com/powerline/fonts
