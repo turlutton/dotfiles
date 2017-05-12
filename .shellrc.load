@@ -151,17 +151,26 @@ fi
 # using ggvGc fzf_browser
 [ -f ~/.fzf_browser/fzf_browser.sh ] && source ~/.fzf_browser/fzf_browser.sh && export PATH=${PATH}:~/.fzf_browser
 
-# cd to latest dir
+# cd to :: case no parameter: latest dir in current dir, case one parameter: using 'fasd'
 cdl() { 
-    local file latest;
-    for file in "${1:-.}"/*; do
-        [[ -d $file ]] && [[ $file -nt $latest ]] && latest=$file;
-    done; 
-    if [[ -a $file ]]; then
-        cd "$latest";
+    local file dirToCd;
+    if [[ -z "$1" ]]; then
+        #if there is no parameter, cd to latest dir in current dir
+        local file latestDirInCurrentDir;
+        for file in "${1:-.}"/*; do
+            [[ -d "$file" ]] && [[ $file -nt "$latestDirInCurrentDir" ]] && latestDirInCurrentDir=$file;
+        done; 
+        dirToCd=$latestDirInCurrentDir;
+    else
+        # if there is a parameter, use 'fasd' to find that dir
+        dirToCd=$(fasd -dt "$1")
+    fi
+
+    if [[ -e "$dirToCd" ]]; then
+        cd "$dirToCd";
     else
         >&2 echo "Error: There is no directory to cd to";
-    fi
+    fi;
 }
 # /!\ Check to what end it is used (I don't remember it), might be removable
 # # Variable d'environnement pointant vers le script de démarrage pour python
