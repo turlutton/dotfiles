@@ -11,7 +11,7 @@ if [ -x /usr/bin/dircolors ]; then
 fi
 
 # some more ls aliases
-alias ll='ls -alFh'
+alias ll='ls -alFht'
 alias l='ls -CF'
 
 # Rm alias: confirmation de suppression avec -i, l'option -f supprime sans confirmation
