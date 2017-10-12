@@ -6,13 +6,15 @@
 	safecrlf = true
 	editor = /usr/bin/vim
 
+# run 'git difftool' to use; 'diff' command can't be aliased to avoid confusion
 [diff]
-      tool = default-difftool
+	tool = default-difftool
 
 [difftool "default-difftool"]
       cmd = vimdiff -f $LOCAL $REMOTE # vim -f '+next' '+execute \"DirDiff\" argv(0) argv(1)' $LOCAL $REMOTE
 
 [difftool]
-      prompt = false
+	prompt = false
 [alias]
 	hist = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+        d=difftool

@@ -1,34 +1,62 @@
 #!/bin/bash
+# this file is executed directly after 'dfm install'
 
-echo 'Running setup.sh..'
+#SettingUp Dir and Files for Log
+LogDir=/tmp/DotFiles
+if ! [ -d "$LogDir" ]; then
+    mkdir "$LogDir";
+fi
+FontLogFile=FontInformationCachedFilesBuild
+if [ -f "$FontLogFile" ]; then
+    echo "--" >> "$LogDir/$FontLogFile";
+fi
 
-echo 'Importing submodules (tmux plugins + vim plugins)..'
+echo '# Running setup.sh .. setting up environnement'
+
+echo '# Importing submodules (tmux plugins + vim plugins)..'
 # import all submodules
-git submodule update --init --recursive
+git submodule update --init --recursive "$HOME/.dotfiles"
 
-echo 'Building font information cached files..'
+echo '# Building font information cached files..'
 # build font information cached files (following https://powerline.readthedocs.io/en/latest/installation/linux.html#font-installation )
-fc-cache -vf "$HOME/.fonts/"
-# after this the fonts are updated on the system but you still have to set it in whatever you use it in (for gnome-terminal I use "Fira Mono Medium for Powerline Medium 10" /home/turlutton/.gconf/apps/gnome-terminal/profiles/Default)
-
+if [ -d "$HOME/.fonts" ]; then
+        if fc-cache -vf "$HOME/.fonts/" >> "$LogDir/$FontLogFile" ; then
+        echo 'Font files updated, now you have to set it where you want to use it. For gnome-terminal I use "Fira Mono Medium for Powerline Medium 10" (manual set in ~/.gconf/apps/gnome-terminal/profiles/Default)';
+    else
+        echo >&2 "Failed to build font information cached files: log file in $LogDir/$FontLogFile";
+    fi;
+else
+    echo >&2 'No .fonts dir in $HOME';
+fi
 # installing fasd - Command-line productivity booster, offers quick access to files and directories, inspired by autojump, z and v. - https://github.com/clvv/fasd
+echo '# Installing fasd'
 if [ -d "$HOME/.fasd" ]; then
-    PREFIX=$HOME make -C "$HOME/.fasd/" install;
+    if command -v fasd >/dev/null; then
+        echo >&2 'Fasd seems to already be installed.. skipping. If not, remove the .fasd directory in $HOME.';
+    else
+        PREFIX=$HOME make -C "$HOME/.fasd/" install;
+    fi;
+else
+    echo >&2 'No .fasd dir in $HOME';
 fi
 
 # installing fzf - A command-line fuzzy finder written in Go - https://github.com/junegunn/fzf
+echo '# Installing fzf'
 if [ -d "$HOME/.fzf" ]; then
     echo "Installing fzf..."
     "$HOME/.fzf/install" --key-bindings --completion --no-update-rc ;
+else
+    echo >&2 'No .fzf dir in $HOME';
 fi
 
 # generate documentation for vim with vim-pathogen plugin
+echo "# Generating documentation for vim"
 if command -v vim >/dev/null; then
-    echo 'vim exists, now generating vim documentation threw  :Helptags  pathogen command'
+    echo 'Vim exists, now generating vim documentation threw  :Helptags  pathogen command'
     # source vimrc, run Helptags and quit
-    vim -S "$HOME/.vim/vimrc" -c "Helptags" -c q
+    vim -S "$HOME/.vim/vimrc" -c "Helptags" -c q;
 else
-    echo "vim does not exist, I can't generate vim documentation threw pathogen plugin"
+    echo >&2 "vim does not exist, I can't generate vim documentation threw pathogen plugin. You should install a package like 'vim-gnome'";
 fi
 
 
