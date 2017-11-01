@@ -28,21 +28,44 @@ if [ -d "$HOME/.fonts" ]; then
 else
     echo >&2 'No .fonts dir in $HOME';
 fi
+
 # installing fasd - Command-line productivity booster, offers quick access to files and directories, inspired by autojump, z and v. - https://github.com/clvv/fasd
+fasdDir=$HOME/.dotfiles/.fasdCopy
+fasdBinDir=$HOME/bin
+fasdManDir=$HOME/share/man/man1
+
+wasFasdAlreadyInstalled=true
 echo '# Installing fasd'
-if [ -d "$HOME/.fasd" ]; then
-    if command -v fasd >/dev/null; then
-        echo >&2 'Fasd seems to already be installed.. skipping. If not, remove the .fasd directory in $HOME.';
-    else
-        PREFIX=$HOME make -C "$HOME/.fasd/" install;
+if [ ! -d "$fastDir" ]; then
+    # the fasd binary should already be in place, but just in case reinstalled it
+    if ! command -v fasd >/dev/null; then
+        echo >&2 "~/bin (with fasd binary inside) should have been symlinked to .dotfiles/bin, there has been a problem!"
+        install -d "$fasdBinDir"
+        install -m 755 "$fasdDir/fasd" "$fasdBinDir"
+        echo "fasd binary installed in $fasdBinDir"
+        wasFasdAlreadyInstalled=false;
+    fi
+
+    # fasd manpage must be installed at the begining
+    if [ ! -f "$fasdManDir/fasd.1" ]; then
+        install -d "$HOME/share/man/man1"
+        install -m 644 "$fasdDir/fasd.1" "$fasdManDir"
+        echo "fasd manpage installed in $fasdManDir"
+        wasFasdAlreadyInstalled=false;
+    fi
+
+    if "$wasFasdAlreadyInstalled"; then
+        echo "Fasd already installed, skipping..."
     fi;
 else
-    echo >&2 'No .fasd dir in $HOME';
+    echo >&2 "No $fasdDir directory, you've messed up my .dotfiles dir!"
+    echo >&2 "Possible workaround: change the fasdDir variable in .dotfiles/setup.sh to point to that dir";
 fi
 
 # installing fzf - A command-line fuzzy finder written in Go - https://github.com/junegunn/fzf
 echo '# Installing fzf'
 if [ -d "$HOME/.fzf" ]; then
+    # fzf already check if it's already installed no need to check ourselves
     echo "Installing fzf..."
     "$HOME/.fzf/install" --key-bindings --completion --no-update-rc ;
 else
