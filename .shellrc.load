@@ -163,7 +163,7 @@ cdl() {
         dirToCd=$latestDirInCurrentDir;
     else
         # if there is a parameter, use 'fasd' to find that dir
-        dirToCd=$(fasd -dt "$1")
+        dirToCd=$(fasd -dt "$*")
     fi
 
     if [[ -e "$dirToCd" ]]; then
