@@ -5,6 +5,7 @@
 * tmux
 * irssi
 * gnome-terminal (easy way to choose font)
+* xflux
 
 ## For vim autotags plugin
 
