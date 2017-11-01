@@ -52,8 +52,8 @@
 [submodule ".tmux/plugins/tmux-open"]
 	path = .tmux/plugins/tmux-open
 	url = https://github.com/tmux-plugins/tmux-open
-[submodule ".fasd"]
-	path = .fasd
+[submodule ".fasdCopy"]
+	path = .fasdCopy
 	url = https://github.com/clvv/fasd
 [submodule ".fzf"]
 	path = .fzf
